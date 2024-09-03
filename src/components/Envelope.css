@@ -1,65 +1,108 @@
-/* Estilo básico do envelope */
-.envelope {
-    background-color: #f4f4f4;
+/* Container do envelope */
+.envelope-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
     padding: 20px;
+    box-sizing: border-box;
+    perspective: 1000px;
+}
+
+/* Envelope */
+.envelope {
+    position: relative;
+    width: 100%;
+    max-width: 350px;
+    height: 200px;
+    background: #f4f1e6;
+    border: 2px solid #ddd;
     border-radius: 10px;
-    text-align: center;
-    position: relative;
-    width: 280px;
-    margin: 20px auto;
+    cursor: pointer;
+    transform-style: preserve-3d;
+    transition: transform 0.6s ease, height 0.6s ease;
+    margin: auto;
+    box-sizing: border-box;
     overflow: hidden;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transform-origin: top;
-    animation: openEnvelope 0.8s ease-out forwards;
 }
 
-/* Animação de abertura do envelope */
-@keyframes openEnvelope {
-    0% {
-        transform: scaleY(0);
-        opacity: 0;
-    }
-
-    100% {
-        transform: scaleY(1);
-        opacity: 1;
-    }
-}
-
-/* Estilo do título e dos parágrafos do envelope */
-.envelope h2 {
-    margin: 10px 0;
-    color: #333;
-    font-size: 22px;
-    z-index: 2;
-    position: relative;
-}
-
-.envelope p {
-    margin: 5px 0;
-    color: #555;
-    font-size: 16px;
-    z-index: 2;
-    position: relative;
+/* Envelope aberto */
+.envelope.open {
+    transform: rotateX(0deg);
+    height: 450px;
+    /* Ajuste a altura conforme necessário */
 }
 
 /* Aba do envelope */
-.envelope::before {
-    content: "";
+.envelope-flap {
     position: absolute;
-    top: -30px;
+    top: 0;
     left: 50%;
     width: 100%;
-    height: 30px;
-    background: #ff9a9e;
-    transform: translateX(-50%) rotate(45deg);
-    border-radius: 0 0 20px 20px;
-    transition: all 0.5s ease;
+    height: 50px;
+    background: #f2c69d;
+    transform: translateX(-50%) rotateX(0);
+    transform-origin: top;
     z-index: 1;
+    transition: transform 0.6s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Efeito hover da aba */
-.envelope:hover::before {
-    top: -50px;
-    background: #fad0c4;
+/* Título da aba */
+.envelope-flap h1 {
+    font-size: 24px;
+    padding-left: 10px;
+    margin: 0;
+}
+
+.envelope-flap span {
+    font-size: 10px;
+}
+
+/* Envelope conteúdo */
+.envelope-content {
+    position: absolute;
+    top: 50px;
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transform: translateY(100%) rotateX(-90deg);
+    transform-origin: top;
+    transition: transform 0.6s ease;
+    box-sizing: border-box;
+    height: calc(100% - 60px);
+    /* Ajusta a altura para ficar dentro do envelope */
+}
+
+/* Envelope aberto */
+.envelope.open .envelope-flap {
+    transform: translateX(-50%) rotateX(45deg);
+}
+
+.envelope.open .envelope-content {
+    transform: translateY(0) rotateX(45deg);
+}
+
+/* Estilo responsivo */
+@media (max-width: 600px) {
+    .envelope {
+        max-width: 90%;
+        /* Ajusta a largura máxima do envelope em telas menores */
+    }
+
+    .envelope-content {
+        padding: 15px;
+        font-size: 14px;
+        height: auto;
+        /* Ajusta a altura para se adaptar ao conteúdo */
+    }
+
+    .envelope-flap {
+        height: 40px;
+    }
 }
