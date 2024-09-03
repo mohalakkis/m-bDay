@@ -1,0 +1,14 @@
+.confirm-button {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+}
+
+.confirm-button button {
+    padding: 10px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}

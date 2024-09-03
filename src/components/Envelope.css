@@ -1,0 +1,65 @@
+/* Estilo básico do envelope */
+.envelope {
+    background-color: #f4f4f4;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    position: relative;
+    width: 280px;
+    margin: 20px auto;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transform-origin: top;
+    animation: openEnvelope 0.8s ease-out forwards;
+}
+
+/* Animação de abertura do envelope */
+@keyframes openEnvelope {
+    0% {
+        transform: scaleY(0);
+        opacity: 0;
+    }
+
+    100% {
+        transform: scaleY(1);
+        opacity: 1;
+    }
+}
+
+/* Estilo do título e dos parágrafos do envelope */
+.envelope h2 {
+    margin: 10px 0;
+    color: #333;
+    font-size: 22px;
+    z-index: 2;
+    position: relative;
+}
+
+.envelope p {
+    margin: 5px 0;
+    color: #555;
+    font-size: 16px;
+    z-index: 2;
+    position: relative;
+}
+
+/* Aba do envelope */
+.envelope::before {
+    content: "";
+    position: absolute;
+    top: -30px;
+    left: 50%;
+    width: 100%;
+    height: 30px;
+    background: #ff9a9e;
+    transform: translateX(-50%) rotate(45deg);
+    border-radius: 0 0 20px 20px;
+    transition: all 0.5s ease;
+    z-index: 1;
+}
+
+/* Efeito hover da aba */
+.envelope:hover::before {
+    top: -50px;
+    background: #fad0c4;
+}

@@ -1,0 +1,117 @@
+/* Container principal do convite */
+.invitation-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+    background-color: #fafafa;
+}
+
+/* Estilos para o card de convite */
+.invitation-card {
+    background-color: #ffffff;
+    border: 2px solid #ddd;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 350px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.5s ease;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    margin: 10px auto;
+    background: linear-gradient(45deg, #ff9a9e, #fad0c4, #fad0c4, #ff9a9e);
+    background-size: 400% 400%;
+    animation: gradientAnimation 8s ease infinite;
+}
+
+/* Efeito ao passar o mouse */
+.invitation-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Estilo do conteúdo do card */
+.card {
+    font-family: 'Arial', sans-serif;
+    color: #333;
+    position: relative;
+    z-index: 2;
+    transition: color 0.5s ease;
+}
+
+/* Estilo do título e do parágrafo */
+.card h2 {
+    font-size: 22px;
+    margin-bottom: 10px;
+    color: #ff6f61;
+}
+
+.card p {
+    font-size: 18px;
+    margin: 8px 0;
+    line-height: 1.5;
+}
+
+/* Efeito ao tocar no card em dispositivos móveis */
+.invitation-card:active {
+    transform: scale(0.98) rotate(-1deg);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+}
+
+/* Animação de fundo do card */
+@keyframes gradientAnimation {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* Transição suave ao abrir o card */
+.invitation-card.open {
+    animation: scaleUp 0.5s ease-in-out;
+}
+
+@keyframes scaleUp {
+    from {
+        transform: scale(0.95);
+        opacity: 0.5;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* Responsividade para dispositivos menores */
+@media (max-width: 480px) {
+    .invitation-card {
+        width: 100%;
+        padding: 15px;
+        margin: 15px auto;
+    }
+
+    .card h2 {
+        font-size: 20px;
+    }
+
+    .card p {
+        font-size: 16px;
+    }
+
+    /* Adiciona mais espaço ao conteúdo e facilita o clique */
+    .invitation-card:active {
+        transform: scale(0.96) rotate(-2deg);
+    }
+}
