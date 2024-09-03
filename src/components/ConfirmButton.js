@@ -54,7 +54,7 @@ function ConfirmButton() {
 
   return (
     <div className="confirm-button">
-      <button onClick={() => setModalIsOpen(true)}>Confirmar Presença</button>
+      <button onClick={() => setModalIsOpen(true)}>Clique aqui</button>
       <Modal
         isOpen={modalIsOpen}
         onRequestClose={() => setModalIsOpen(false)}
@@ -78,30 +78,28 @@ function ConfirmButton() {
               required
             />
           </label>
-          <div className="accompanied-section">
-            <label>
-              <input
-                type="checkbox"
-                checked={accompanied}
-                onChange={(e) => setAccompanied(e.target.checked)}
-              />
-              Acompanhantes
-            </label>
-            {accompanied && (
-              <label>
-                Quantos?
-                <input
-                  required
-                  type="number"
-                  min="0"
-                  value={numberOfAccompanied}
-                  onChange={(e) =>
-                    setNumberOfAccompanied(parseInt(e.target.value, 10))
-                  }
-                />
-              </label>
-            )}
+          <div className="checkbox-container">
+            <input
+              type="checkbox"
+              checked={accompanied}
+              onChange={(e) => setAccompanied(e.target.checked)}
+            />
+            <label>Acompanhantes</label>
           </div>
+          {accompanied && (
+            <label>
+              Quantos?
+              <input
+                required
+                type="number"
+                min="0"
+                value={numberOfAccompanied}
+                onChange={(e) =>
+                  setNumberOfAccompanied(parseInt(e.target.value, 10))
+                }
+              />
+            </label>
+          )}
           <div className="button-group">
             <button type="submit">Enviar</button>
             <button type="button" onClick={() => setModalIsOpen(false)}>
