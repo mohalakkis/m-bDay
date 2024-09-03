@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import Modal from "react-modal";
 import "./ConfirmButton.css";
 import { initializeApp } from "firebase/app";
 import { getFirestore, collection, addDoc } from "firebase/firestore";
@@ -15,11 +16,16 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-function ConfirmButton() {
-  async function saveConfirmation() {
-    // Solicita o nome da pessoa
-    const name = prompt("Por favor, insira seu nome:");
+// Configura o modal
+Modal.setAppElement("#root");
 
+function ConfirmButton() {
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [name, setName] = useState("");
+  const [accompanied, setAccompanied] = useState(false);
+  const [numberOfAccompanied, setNumberOfAccompanied] = useState(0);
+
+  async function saveConfirmation() {
     // Verifica se o nome foi preenchido
     if (!name) {
       alert("Nome é obrigatório para confirmar a presença.");
@@ -31,10 +37,15 @@ function ConfirmButton() {
       const docRef = await addDoc(collection(db, "confirmations"), {
         name: name,
         confirmed: true,
+        accompanied: accompanied ? numberOfAccompanied : 0,
         timestamp: new Date(),
       });
       console.log("Confirmação registrada com ID:", docRef.id);
       alert("Confirmação registrada com sucesso!");
+      setModalIsOpen(false);
+      setName("");
+      setAccompanied(false);
+      setNumberOfAccompanied(0);
     } catch (e) {
       console.error("Erro ao adicionar documento:", e);
       alert("Erro ao confirmar presença: " + e.message);
@@ -43,7 +54,62 @@ function ConfirmButton() {
 
   return (
     <div className="confirm-button">
-      <button onClick={saveConfirmation}>Confirmar Presença</button>
+      <button onClick={() => setModalIsOpen(true)}>Confirmar Presença</button>
+      <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={() => setModalIsOpen(false)}
+        contentLabel="Confirmação de Presença"
+        className="modal"
+        overlayClassName="overlay"
+      >
+        <h2>Confirmar Presença</h2>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            saveConfirmation();
+          }}
+        >
+          <label>
+            Nome:
+            <input
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
+            />
+          </label>
+          <div className="accompanied-section">
+            <label>
+              <input
+                type="checkbox"
+                checked={accompanied}
+                onChange={(e) => setAccompanied(e.target.checked)}
+              />
+              Acompanhantes
+            </label>
+            {accompanied && (
+              <label>
+                Quantos?
+                <input
+                  required
+                  type="number"
+                  min="0"
+                  value={numberOfAccompanied}
+                  onChange={(e) =>
+                    setNumberOfAccompanied(parseInt(e.target.value, 10))
+                  }
+                />
+              </label>
+            )}
+          </div>
+          <div className="button-group">
+            <button type="submit">Enviar</button>
+            <button type="button" onClick={() => setModalIsOpen(false)}>
+              Cancelar
+            </button>
+          </div>
+        </form>
+      </Modal>
     </div>
   );
 }
